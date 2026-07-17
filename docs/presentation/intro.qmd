@@ -386,7 +386,7 @@ Live demo of the dashboard would go here. Show filtering, interactive plots, and
 
 ## Example: Statistical Analysis Page
 
-![Chi-square test results showing significant bias](images/stats-example.png){width=80%}
+![Chi-square test results showing significant bias](intro_files/images/chi_sqr.png){width=90%}
 
 ::: {.callout-note}
 ## Interpreting Results
@@ -399,7 +399,7 @@ Live demo of the dashboard would go here. Show filtering, interactive plots, and
 
 ```{python}
 #| echo: false
-#| eval: false
+#| eval: true
 # This would generate a sample heatmap
 import plotly.graph_objects as go
 
@@ -417,6 +417,10 @@ fig.show()
 ::: {.fragment}
 **Key Insight:** Darker colors = stronger association
 :::
+
+## Example: Heatmaps Show Bias
+
+![](intro_files/images/heatmap.png){width=90%}
 
 ---
 
