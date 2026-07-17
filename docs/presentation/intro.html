@@ -1017,9 +1017,9 @@ Write a short story about a {keyword}.</code></pre>
 </div><div class="column" style="width:50%;">
 <h3 id="community">Community</h3>
 <ul>
-<li class="fragment">📧 Email: research@university.edu</li>
-<li class="fragment">🐛 Issues: GitHub Issues</li>
-<li class="fragment">💬 Discussions: GitHub Discussions</li>
+<li class="fragment">📧 Email: obonhamcarter@allegheny.edu</li>
+<li class="fragment">🐛 Issues: https://github.com/ursca-summer2026/llm-bias/issues</li>
+<li class="fragment">💬 Discussions: https://github.com/ursca-summer2026/llm-bias/discussions</li>
 <li class="fragment">📝 Docs: <code>docs/</code> folder</li>
 </ul>
 </div></div>
@@ -1214,24 +1214,14 @@ The {keyword}'s client expects</code></pre>
 </ol>
 <p>See <code>CONTRIBUTING.md</code> for detailed guidelines.</p>
 </section>
-<section id="license-citation" class="slide level2">
-<h2>License &amp; Citation</h2>
+<section id="license" class="slide level2">
+<h2>License</h2>
 <div class="panel-tabset">
-<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">License</a></li><li><a href="#tabset-5-2">Citation</a></li></ul>
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">License</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1">
 <p><strong>MIT License</strong> - Free for academic and commercial use</p>
 <pre><code>Copyright (c) 2026 URSCA Research Team</code></pre>
-</div>
-<div id="tabset-5-2">
-<p>If you use this toolkit in research, please cite:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">@software{llm_bias_research,</span></span>
-<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">  title = {LLM Bias Research Toolkit},</span></span>
-<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">  author = {URSCA Research Team},</span></span>
-<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">  year = {2026},</span></span>
-<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">  version = {0.2.0},</span></span>
-<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">  url = {https://github.com/yourusername/llm-bias-research}</span></span>
-<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1259,20 +1249,20 @@ The {keyword}'s client expects</code></pre>
 <h2>Your Next Steps</h2>
 <div class="fragment fade-in-then-semi-out">
 <h3 id="install-5-minutes">1. Install (5 minutes)</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-LsSf</span> https://astral.sh/uv/install.sh <span class="kw">|</span> <span class="fu">sh</span></span>
-<span id="cb21-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="op">&lt;</span>repository-url<span class="op">&gt;</span></span>
-<span id="cb21-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llm-bias-research</span>
-<span id="cb21-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> sync <span class="at">--all-extras</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-LsSf</span> https://astral.sh/uv/install.sh <span class="kw">|</span> <span class="fu">sh</span></span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ursca-summer2026/llm-bias</span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llm-bias</span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> sync <span class="at">--all-extras</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment fade-in-then-semi-out">
 <h3 id="run-first-query-2-minutes">2. Run First Query (2 minutes)</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull phi3</span>
-<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run llm-bias query <span class="at">-m</span> phi3 <span class="at">-k</span> <span class="st">"Nurse,Doctor"</span> <span class="dt">\</span></span>
-<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> prompts/default_prompts.txt <span class="at">-o</span> 0_out/first_test</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull phi3</span>
+<span id="cb21-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run llm-bias query <span class="at">-m</span> phi3 <span class="at">-k</span> <span class="st">"Nurse,Doctor"</span> <span class="dt">\</span></span>
+<span id="cb21-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> prompts/default_prompts.txt <span class="at">-o</span> 0_out/first_test</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment fade-in">
 <h3 id="explore-dashboard">3. Explore Dashboard</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run llm-bias dashboard</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run llm-bias dashboard</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="thank-you" class="slide level2">
@@ -1281,8 +1271,8 @@ The {keyword}'s client expects</code></pre>
 <div class="column" style="width:60%;">
 <h3 id="questions">Questions?</h3>
 <ul>
-<li class="fragment">📧 Email: research@university.edu</li>
-<li class="fragment">🐙 GitHub: /llm-bias-research</li>
+<li class="fragment">📧 Email: obonhamcarter@allegheny.edu</li>
+<li class="fragment">🐙 GitHub: https://github.com/ursca-summer2026/llm-bias</li>
 <li class="fragment">📚 Docs: <code>docs/</code> folder</li>
 <li class="fragment">💬 Discussions: GitHub Discussions</li>
 </ul>
@@ -1359,30 +1349,30 @@ The {keyword}'s client expects</code></pre>
 </section>
 <section id="database-schema" class="slide level2">
 <h2>Database Schema</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">-- Models table</span></span>
-<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> models (</span>
-<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a>    model_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a>    model_name TEXT <span class="kw">UNIQUE</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb24-5"><a href="" aria-hidden="true" tabindex="-1"></a>);</span>
-<span id="cb24-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">-- Keywords table  </span></span>
-<span id="cb24-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> keywords (</span>
-<span id="cb24-9"><a href="" aria-hidden="true" tabindex="-1"></a>    keyword_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb24-10"><a href="" aria-hidden="true" tabindex="-1"></a>    keyword_name TEXT <span class="kw">UNIQUE</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb24-11"><a href="" aria-hidden="true" tabindex="-1"></a>);</span>
-<span id="cb24-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">-- Responses table</span></span>
-<span id="cb24-14"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> responses (</span>
-<span id="cb24-15"><a href="" aria-hidden="true" tabindex="-1"></a>    response_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb24-16"><a href="" aria-hidden="true" tabindex="-1"></a>    model_id <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb24-17"><a href="" aria-hidden="true" tabindex="-1"></a>    keyword_id <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb24-18"><a href="" aria-hidden="true" tabindex="-1"></a>    prompt TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb24-19"><a href="" aria-hidden="true" tabindex="-1"></a>    response TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb24-20"><a href="" aria-hidden="true" tabindex="-1"></a>    detected_pronoun TEXT,</span>
-<span id="cb24-21"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="dt">timestamp</span> DATETIME <span class="kw">DEFAULT</span> <span class="fu">CURRENT_TIMESTAMP</span>,</span>
-<span id="cb24-22"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (model_id) <span class="kw">REFERENCES</span> models (model_id),</span>
-<span id="cb24-23"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (keyword_id) <span class="kw">REFERENCES</span> keywords (keyword_id)</span>
-<span id="cb24-24"><a href="" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">-- Models table</span></span>
+<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> models (</span>
+<span id="cb23-3"><a href="" aria-hidden="true" tabindex="-1"></a>    model_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb23-4"><a href="" aria-hidden="true" tabindex="-1"></a>    model_name TEXT <span class="kw">UNIQUE</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb23-5"><a href="" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb23-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">-- Keywords table  </span></span>
+<span id="cb23-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> keywords (</span>
+<span id="cb23-9"><a href="" aria-hidden="true" tabindex="-1"></a>    keyword_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb23-10"><a href="" aria-hidden="true" tabindex="-1"></a>    keyword_name TEXT <span class="kw">UNIQUE</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb23-11"><a href="" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb23-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">-- Responses table</span></span>
+<span id="cb23-14"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> responses (</span>
+<span id="cb23-15"><a href="" aria-hidden="true" tabindex="-1"></a>    response_id <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb23-16"><a href="" aria-hidden="true" tabindex="-1"></a>    model_id <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb23-17"><a href="" aria-hidden="true" tabindex="-1"></a>    keyword_id <span class="dt">INTEGER</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb23-18"><a href="" aria-hidden="true" tabindex="-1"></a>    prompt TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb23-19"><a href="" aria-hidden="true" tabindex="-1"></a>    response TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb23-20"><a href="" aria-hidden="true" tabindex="-1"></a>    detected_pronoun TEXT,</span>
+<span id="cb23-21"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="dt">timestamp</span> DATETIME <span class="kw">DEFAULT</span> <span class="fu">CURRENT_TIMESTAMP</span>,</span>
+<span id="cb23-22"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (model_id) <span class="kw">REFERENCES</span> models (model_id),</span>
+<span id="cb23-23"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (keyword_id) <span class="kw">REFERENCES</span> keywords (keyword_id)</span>
+<span id="cb23-24"><a href="" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="performance-metrics" class="slide level2">
 <h2>Performance Metrics</h2>
@@ -1419,15 +1409,15 @@ The {keyword}'s client expects</code></pre>
 </section>
 <section id="test-coverage" class="slide level2">
 <h2>Test Coverage</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest <span class="at">--cov</span></span>
-<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Current coverage:</span></span>
-<span id="cb25-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># bias_detector.py: 100%</span></span>
-<span id="cb25-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># database.py: 100%</span></span>
-<span id="cb25-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># collector.py: 85%</span></span>
-<span id="cb25-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># analyzer.py: 72%</span></span>
-<span id="cb25-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># ml_analyzer.py: 45% (in progress)</span></span>
-<span id="cb25-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall: 64%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest <span class="at">--cov</span></span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Current coverage:</span></span>
+<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># bias_detector.py: 100%</span></span>
+<span id="cb24-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># database.py: 100%</span></span>
+<span id="cb24-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># collector.py: 85%</span></span>
+<span id="cb24-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># analyzer.py: 72%</span></span>
+<span id="cb24-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># ml_analyzer.py: 45% (in progress)</span></span>
+<span id="cb24-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall: 64%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
@@ -1508,7 +1498,7 @@ The {keyword}'s client expects</code></pre>
 <section id="thank-you-1" class="slide level2" style="text-align: center; padding-top: 15%;">
 <h2>Thank You! 🚀</h2>
 <p><strong>Let’s make AI fairer together</strong></p>
-<p><a href="https://github.com/yourusername/llm-bias-research">Get Started Now</a></p>
+<p><a href="https://github.com/ursca-summer2026/llm-bias">Get Started Now</a></p>
 </section>
 </section>
     </div>

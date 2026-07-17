@@ -634,9 +634,9 @@ python
 
 ::: {.column width="50%"}
 ### Community
-- 📧 Email: research@university.edu
-- 🐛 Issues: GitHub Issues
-- 💬 Discussions: GitHub Discussions
+- 📧 Email: obonhamcarter@allegheny.edu
+- 🐛 Issues: https://github.com/ursca-summer2026/llm-bias/issues
+- 💬 Discussions: https://github.com/ursca-summer2026/llm-bias/discussions
 - 📝 Docs: `docs/` folder
 :::
 :::
@@ -817,7 +817,7 @@ We welcome contributions! Areas where you can help:
 
 See `CONTRIBUTING.md` for detailed guidelines.
 
-## License & Citation
+## License 
 
 ::: {.panel-tabset}
 
@@ -826,19 +826,6 @@ See `CONTRIBUTING.md` for detailed guidelines.
 
 ```
 Copyright (c) 2026 URSCA Research Team
-```
-
-### Citation
-If you use this toolkit in research, please cite:
-
-```bibtex
-@software{llm_bias_research,
-  title = {LLM Bias Research Toolkit},
-  author = {URSCA Research Team},
-  year = {2026},
-  version = {0.2.0},
-  url = {https://github.com/yourusername/llm-bias-research}
-}
 ```
 
 :::
@@ -864,8 +851,8 @@ If you use this toolkit in research, please cite:
 ### 1. Install (5 minutes)
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
-git clone <repository-url>
-cd llm-bias-research
+git clone https://github.com/ursca-summer2026/llm-bias
+cd llm-bias
 uv sync --all-extras
 ```
 :::
@@ -892,8 +879,8 @@ uv run llm-bias dashboard
 ::: {.column width="60%"}
 ### Questions?
 
-- 📧 Email: research@university.edu
-- 🐙 GitHub: /llm-bias-research
+- 📧 Email: obonhamcarter@allegheny.edu
+- 🐙 GitHub: https://github.com/ursca-summer2026/llm-bias
 - 📚 Docs: `docs/` folder
 - 💬 Discussions: GitHub Discussions
 
@@ -1067,5 +1054,5 @@ Watch the repository for new releases and features!
 
 **Let's make AI fairer together**
 
-[Get Started Now](https://github.com/yourusername/llm-bias-research)
+[Get Started Now](https://github.com/ursca-summer2026/llm-bias)
 :::
