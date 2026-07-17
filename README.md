@@ -361,25 +361,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Built on [Ollama](https://ollama.ai/) for local LLM inference
 - Visualization powered by [Streamlit](https://streamlit.io/) and [Plotly](https://plotly.com/)
 
-## 📧 Contact
-
-For questions or feedback:
-- Open an issue on GitHub
-- Contact the research team at [your-email@university.edu]
-
-## 📊 Citation
-
-If you use this toolkit in your research, please cite:
-
-```bibtex
-@software{llm_bias_research_2026,
-  title = {LLM Bias Research: A Toolkit for Measuring Gender Bias in Language Models},
-  author = {Your Name and Contributors},
-  year = {2026},
-  url = {https://github.com/yourusername/llm-bias-research}
-}
-```
-
 ---
 
 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧
