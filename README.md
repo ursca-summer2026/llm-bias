@@ -343,7 +343,7 @@ The toolkit provides multiple statistical tests:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+We welcome contributions! Please see our [Contributing Guide](docs/CONTRIBUTING.md) for details on:
 
 - Code of conduct
 - Development setup
