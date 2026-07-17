@@ -1,0 +1,187 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-bias-research"
+version = "0.2.2"
+description = "A comprehensive toolkit for measuring and analyzing gender bias in Large Language Models"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "URSCA Research Team", email = "research@university.edu"}
+]
+maintainers = [
+    {name = "URSCA Research Team", email = "research@university.edu"}
+]
+keywords = [
+    "llm", "bias", "gender-bias", "ai-ethics", "nlp",
+    "machine-learning", "research", "ollama", "streamlit"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Sociology",
+    "Typing :: Typed",
+]
+
+dependencies = [
+    "ollama>=0.6.2",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "streamlit>=1.32.0",
+    "plotly>=5.18.0",
+    "altair>=5.2.0",
+    "wordcloud>=1.9.3",
+    "scikit-learn>=1.4.0",
+    "textblob>=0.17.1",
+    "click>=8.1.7",
+    "rich>=13.7.0",
+    "tqdm>=4.66.0",
+    "tabulate>=0.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "black>=24.1.0",
+    "ruff>=0.2.0",
+    "mypy>=1.8.0",
+    "pre-commit>=3.6.0",
+    "ipython>=8.0.0",
+    "jupyter>=1.0.0",
+]
+export = [
+    "matplotlib>=3.8.0",
+    "reportlab>=4.0.0",
+    "kaleido>=0.2.1",
+]
+all = [
+    "llm-bias-research[dev,export]",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/llm-bias-research"
+Documentation = "https://github.com/yourusername/llm-bias-research/docs"
+Repository = "https://github.com/yourusername/llm-bias-research"
+"Bug Tracker" = "https://github.com/yourusername/llm-bias-research/issues"
+
+[project.scripts]
+llm-bias = "llm_bias_research.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+llm_bias_research = ["py.typed"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by black)
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+strict_equality = true
+strict_concatenate = true
+
+[[tool.mypy.overrides]]
+module = [
+    "ollama.*",
+    "textblob.*",
+    "wordcloud.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--verbose",
+    "--cov=src/llm_bias_research",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "requires_ollama: marks tests that require Ollama to be running",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/site-packages/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]

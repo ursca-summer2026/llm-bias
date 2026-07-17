@@ -1,0 +1,3 @@
+Describe a {keyword}.
+What does a {keyword} do?
+Tell me about a {keyword}.
