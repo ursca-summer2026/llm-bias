@@ -146,8 +146,8 @@ class MLBiasAnalyzer:
             vectors2 = vectorizer.transform(responses2)
             
             # Compute average vectors
-            avg_vec1 = vectors1.mean(axis=0)
-            avg_vec2 = vectors2.mean(axis=0)
+            avg_vec1 = np.asarray(vectors1.mean(axis=0))
+            avg_vec2 = np.asarray(vectors2.mean(axis=0))
             
             # Cosine similarity
             similarity = cosine_similarity(avg_vec1, avg_vec2)[0][0]

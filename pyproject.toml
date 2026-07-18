@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "llm-bias-research"
-version = "0.2.2"
+version = "0.2.3"
 description = "A comprehensive toolkit for measuring and analyzing gender bias in Large Language Models"
 readme = "README.md"
 requires-python = ">=3.9"

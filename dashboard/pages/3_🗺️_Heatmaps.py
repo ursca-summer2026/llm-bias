@@ -292,12 +292,12 @@ if not contingency_model.empty:
 
     with col1:
         st.markdown("**🏆 Least Biased Model**")
-        best_model = model_bias_df.idxmin()[0]
+        best_model = model_bias_df["Bias Score"].idxmin()
         st.success(f"{best_model}: {model_bias_df.loc[best_model, 'Bias Score']:.2f}% bias")
 
     with col2:
         st.markdown("**⚠️ Most Biased Model**")
-        worst_model = model_bias_df.idxmax()[0]
+        worst_model = model_bias_df["Bias Score"].idxmax()
         st.warning(f"{worst_model}: {model_bias_df.loc[worst_model, 'Bias Score']:.2f}% bias")
 
 st.markdown("---")
