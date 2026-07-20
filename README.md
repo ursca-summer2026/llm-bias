@@ -147,6 +147,34 @@ uv run llm-bias query \
 # If files exist, creates phi3_test_01.csv to avoid overwrites
 ```
 
+**Executing scripts**: 
+
+If you would like to write a script to run the tool on several models in series, then (Unix) *bash* script will have the following form for 100 results from each prompt given.
+
+```bash
+# The number of results from each prompt
+runs="100"
+
+# List models below in for loop
+for model in phi3 qwen ornith llama3.2 mistral nomic-embed-text qwen3-coder-next deepseek-r1 gemma4
+
+# The command with parameters. Note, the "/" at the end of each line in the command below is bash syntax to treat the string covering multiple lines as a string of one line.
+
+do
+    echo "Model: $model"
+    echo "Runs: $runs"
+    uv run llm-bias query \
+      --model ${model} \
+      --keywords "Nurse,Doctor,Engineer,Lawyer,Teacher,Chef,Hair Stylist" \
+      --prompt-file prompts/prompts_2.txt \
+      --runs ${runs} \
+      --output 0_out/runs_${runs}-model_${model} \
+      --max-tokens 500
+    done
+```
+
+If using this script on a machine with low amounts of memory or poor ventilation, then please remember that there will be no breaks for the machine until the script has completed. This suggests that the machine may become hot. Be sure to check on the machine periodically to prevent hardware failures from the excessive amounts of heat.
+
 #### 2. Analyze Results with the Dashboard
 
 ```bash
