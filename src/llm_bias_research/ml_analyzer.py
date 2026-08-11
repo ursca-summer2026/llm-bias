@@ -10,6 +10,7 @@ Provides advanced ML-based analysis including:
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import confusion_matrix
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
@@ -29,6 +30,7 @@ class MLBiasAnalyzer:
             data: DataFrame with columns: model, keyword, prompt, output
         """
         self.data = data.copy()
+        self._predictor_results: Optional[Dict[str, Any]] = None
         
         if "pronoun_group" not in self.data.columns:
             self.data["pronoun_group"] = self.data["output"].apply(detect_pronoun)
@@ -37,6 +39,7 @@ class MLBiasAnalyzer:
         self,
         test_size: float = 0.2,
         random_state: int = 42,
+        cv_folds: int = 5,
     ) -> Dict[str, Any]:
         """Train a model to predict pronoun group from prompt and keyword.
 
@@ -46,12 +49,17 @@ class MLBiasAnalyzer:
         Args:
             test_size: Proportion of data for testing.
             random_state: Random seed for reproducibility.
+            cv_folds: Number of cross-validation folds.
 
         Returns:
             Dictionary with model, scores, and feature importance.
         """
         # Prepare features
         X = self.data[["keyword", "prompt"]].copy()
+
+        # Normalize columns to strings before feature extraction
+        X["keyword"] = X["keyword"].apply(lambda value: str(value) if pd.notna(value) else "")
+        X["prompt"] = X["prompt"].apply(lambda value: str(value) if pd.notna(value) else "")
         
         # Encode categorical features
         keyword_encoder = LabelEncoder()
@@ -59,8 +67,8 @@ class MLBiasAnalyzer:
         
         # For prompts, we'll use the prompt type length as a simple feature
         # In a more sophisticated version, we'd use TF-IDF or embeddings
-        X["prompt_length"] = X["prompt"].str.len()
-        X["prompt_word_count"] = X["prompt"].str.split().str.len()
+        X["prompt_length"] = X["prompt"].apply(lambda value: len(str(value)))
+        X["prompt_word_count"] = X["prompt"].apply(lambda value: len(str(value).split()))
         
         # Target variable
         y = self.data["pronoun_group"]
@@ -81,21 +89,32 @@ class MLBiasAnalyzer:
         # Evaluate
         train_score = clf.score(X_train, y_train)
         test_score = clf.score(X_test, y_test)
-        cv_scores = cross_val_score(clf, X_train, y_train, cv=5)
+        cv_scores = cross_val_score(clf, X_train, y_train, cv=cv_folds)
         
         # Feature importance
-        feature_names = ["keyword", "prompt_length", "prompt_word_count"]
-        feature_importance = dict(zip(feature_names, clf.feature_importances_))
+        feature_names = ["keyword_encoded", "prompt_length", "prompt_word_count"]
+        feature_importance_values = [float(importance) for importance in clf.feature_importances_]
+        feature_importance_map = dict(zip(feature_names, feature_importance_values))
+        class_labels = [str(label) for label in pd.unique(y)]
+        predictions = clf.predict(X_test)
+        cm = confusion_matrix(y_test, predictions, labels=class_labels)
         
-        return {
+        results = {
             "model": clf,
             "keyword_encoder": keyword_encoder,
-            "train_accuracy": train_score,
-            "test_accuracy": test_score,
-            "cv_mean_accuracy": cv_scores.mean(),
-            "cv_std_accuracy": cv_scores.std(),
-            "feature_importance": feature_importance,
+            "train_accuracy": float(train_score),
+            "test_accuracy": float(test_score),
+            "cv_mean_accuracy": float(cv_scores.mean()),
+            "cv_std_accuracy": float(cv_scores.std()),
+            "cv_scores": cv_scores.tolist(),
+            "feature_importance": feature_importance_values,
+            "feature_importance_map": feature_importance_map,
+            "feature_names": feature_names,
+            "confusion_matrix": cm,
+            "class_labels": class_labels,
         }
+        self._predictor_results = results
+        return results
 
     def compute_response_similarity(
         self,
@@ -261,38 +280,63 @@ class MLBiasAnalyzer:
         self,
         keyword: str,
         prompt: str,
-        predictor_results: Dict[str, Any],
-    ) -> Dict[str, float]:
+        predictor_results: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
         """Predict pronoun group probabilities for a new keyword/prompt.
 
         Args:
             keyword: The keyword/profession.
             prompt: The prompt text.
-            predictor_results: Results from train_bias_predictor().
+            predictor_results: Optional results from train_bias_predictor().
 
         Returns:
-            Dictionary mapping pronoun groups to probabilities.
+            Dictionary with predicted class, confidence, and probabilities.
         """
+        if predictor_results is None:
+            predictor_results = self._predictor_results
+
+        if predictor_results is None:
+            raise ValueError("No trained predictor results available. Train the model first.")
+
         model = predictor_results["model"]
         keyword_encoder = predictor_results["keyword_encoder"]
         
         try:
-            # Encode keyword
-            keyword_encoded = keyword_encoder.transform([keyword])[0]
+            # Encode keyword; fall back to a neutral encoded value for unseen terms
+            try:
+                keyword_encoded = keyword_encoder.transform([keyword])[0]
+            except ValueError:
+                known_keywords = keyword_encoder.classes_
+                if len(known_keywords) > 0:
+                    keyword_encoded = keyword_encoder.transform([known_keywords[0]])[0]
+                else:
+                    keyword_encoded = 0
             
             # Extract features
             prompt_length = len(prompt)
             prompt_word_count = len(prompt.split())
             
             # Create feature vector
-            X = np.array([[keyword_encoded, prompt_length, prompt_word_count]])
+            feature_frame = pd.DataFrame(
+                [[keyword_encoded, prompt_length, prompt_word_count]],
+                columns=["keyword_encoded", "prompt_length", "prompt_word_count"],
+            )
             
             # Get probability predictions
-            proba = model.predict_proba(X)[0]
+            proba = model.predict_proba(feature_frame)[0]
             classes = model.classes_
+            probabilities = dict(zip(classes, proba))
+            predicted_class = max(probabilities, key=probabilities.get)
             
-            return dict(zip(classes, proba))
+            return {
+                "predicted_class": predicted_class,
+                "confidence": float(probabilities[predicted_class]),
+                "probabilities": probabilities,
+            }
         except Exception as e:
             return {
                 "error": f"Prediction failed: {e}",
+                "predicted_class": None,
+                "confidence": 0.0,
+                "probabilities": {},
             }

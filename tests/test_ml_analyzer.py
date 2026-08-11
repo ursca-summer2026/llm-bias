@@ -170,6 +170,19 @@ class TestBiasPrediction:
         """Test that prediction fails without training first."""
         with pytest.raises((AttributeError, ValueError)):
             ml_analyzer.predict_bias_likelihood("Test", "Test prompt")
+
+    def test_predict_with_explicit_predictor_results(self, ml_analyzer):
+        """Test that prediction works when trained results are provided explicitly."""
+        results = ml_analyzer.train_bias_predictor()
+        prediction = ml_analyzer.predict_bias_likelihood(
+            "Scientist",
+            "Describe a {keyword}.",
+            predictor_results=results,
+        )
+
+        assert prediction["predicted_class"] in ["he/him", "she/her", "they/them", "none"]
+        assert 0 <= prediction["confidence"] <= 1
+        assert prediction["probabilities"]
     
     def test_predict_for_known_keyword(self, ml_analyzer):
         """Test prediction for a keyword that exists in training data."""

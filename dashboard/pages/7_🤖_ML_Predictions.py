@@ -115,24 +115,29 @@ with st.spinner("Training Random Forest classifier..."):
         
         # Display results
         col1, col2, col3, col4 = st.columns(4)
+        train_accuracy = results.get("train_accuracy", 0.0)
+        test_accuracy = results.get("test_accuracy", 0.0)
+        cv_scores = results.get("cv_scores", [])
+        if not cv_scores:
+            cv_scores = [results.get("cv_mean_accuracy", 0.0)]
         
         with col1:
             st.metric(
                 "Training Accuracy",
-                f"{results['train_accuracy']:.1%}",
+                f"{train_accuracy:.1%}",
                 help="How well the model fits training data"
             )
         
         with col2:
             st.metric(
                 "Test Accuracy",
-                f"{results['test_accuracy']:.1%}",
+                f"{test_accuracy:.1%}",
                 help="How well the model predicts unseen data"
             )
         
         with col3:
-            cv_mean = np.mean(results['cv_scores'])
-            cv_std = np.std(results['cv_scores'])
+            cv_mean = np.mean(cv_scores)
+            cv_std = np.std(cv_scores)
             st.metric(
                 "Cross-Val Accuracy",
                 f"{cv_mean:.1%}",
@@ -142,7 +147,7 @@ with st.spinner("Training Random Forest classifier..."):
         with col4:
             # Calculate baseline (most frequent class)
             baseline = filtered_data["pronoun_group"].value_counts().max() / len(filtered_data)
-            improvement = results['test_accuracy'] - baseline
+            improvement = test_accuracy - baseline
             st.metric(
                 "vs Baseline",
                 f"+{improvement:.1%}",
@@ -150,10 +155,10 @@ with st.spinner("Training Random Forest classifier..."):
             )
         
         # Model interpretation
-        if results['test_accuracy'] > 0.5:
-            if results['test_accuracy'] > 0.7:
+        if test_accuracy > 0.5:
+            if test_accuracy > 0.7:
                 interpretation = "🟢 **Strong predictive power** - Bias patterns are highly systematic"
-            elif results['test_accuracy'] > 0.6:
+            elif test_accuracy > 0.6:
                 interpretation = "🟡 **Moderate predictive power** - Some bias patterns are learnable"
             else:
                 interpretation = "🟠 **Weak predictive power** - Bias patterns exist but are complex"
@@ -170,9 +175,14 @@ with st.spinner("Training Random Forest classifier..."):
         Higher values = more influential in determining pronoun usage.
         """)
         
+        feature_names = results.get("feature_names", [])
+        feature_importance_values = results.get("feature_importance", [])
+        if len(feature_names) != len(feature_importance_values):
+            feature_importance_values = [0.0] * len(feature_names)
+
         feature_importance = pd.DataFrame({
-            "Feature": results['feature_names'],
-            "Importance": results['feature_importance']
+            "Feature": feature_names,
+            "Importance": feature_importance_values
         }).sort_values("Importance", ascending=False)
         
         # Only show top features
@@ -305,19 +315,27 @@ with st.form("prediction_form"):
     if submitted:
         try:
             # Make prediction
-            prediction = analyzer.predict_bias_likelihood(new_keyword, selected_prompt)
+            prediction = analyzer.predict_bias_likelihood(
+                new_keyword,
+                selected_prompt,
+                predictor_results=results,
+            )
             
             st.markdown("### Prediction Results")
             
             # Show probabilities
+            probabilities = prediction.get("probabilities", {}) or {}
+            if not isinstance(probabilities, dict):
+                probabilities = {}
+
             col1, col2, col3, col4 = st.columns(4)
             
             cols = [col1, col2, col3, col4]
             pronouns = ["he/him", "she/her", "they/them", "none"]
             
             for col, pronoun in zip(cols, pronouns):
-                if pronoun in prediction["probabilities"]:
-                    prob = prediction["probabilities"][pronoun]
+                if pronoun in probabilities:
+                    prob = probabilities[pronoun]
                     col.metric(
                         pronoun.title(),
                         f"{prob:.1%}",
@@ -326,8 +344,8 @@ with st.form("prediction_form"):
             
             # Visualization
             prob_df = pd.DataFrame({
-                "Pronoun": list(prediction["probabilities"].keys()),
-                "Probability": list(prediction["probabilities"].values())
+                "Pronoun": list(probabilities.keys()),
+                "Probability": list(probabilities.values())
             })
             
             fig = px.bar(
@@ -346,23 +364,26 @@ with st.form("prediction_form"):
             st.plotly_chart(fig, use_container_width=True)
             
             # Interpretation
-            predicted_class = prediction["predicted_class"]
-            confidence = prediction["confidence"]
+            predicted_class = prediction.get("predicted_class")
+            confidence = prediction.get("confidence", 0.0)
             
-            if confidence > 0.6:
-                strength = "strongly"
-            elif confidence > 0.4:
-                strength = "moderately"
+            if probabilities:
+                if confidence > 0.6:
+                    strength = "strongly"
+                elif confidence > 0.4:
+                    strength = "moderately"
+                else:
+                    strength = "weakly"
+                
+                st.info(f"""
+                📊 **Interpretation:**  
+                The model predicts "{new_keyword}" is **{strength} associated** with **{predicted_class}** 
+                (confidence: {confidence:.1%}).
+                
+                This is based on patterns learned from similar professions in the training data.
+                """)
             else:
-                strength = "weakly"
-            
-            st.info(f"""
-            📊 **Interpretation:**  
-            The model predicts "{new_keyword}" is **{strength} associated** with **{predicted_class}** 
-            (confidence: {confidence:.1%}).
-            
-            This is based on patterns learned from similar professions in the training data.
-            """)
+                st.warning("The model could not produce probability values for this input.")
             
         except Exception as e:
             st.error(f"Prediction failed: {e}")
@@ -390,12 +411,17 @@ if st.button("Analyze Batch"):
                 
                 batch_results = []
                 for prof in professions:
-                    pred = analyzer.predict_bias_likelihood(prof, prompt)
+                    pred = analyzer.predict_bias_likelihood(
+                        prof,
+                        prompt,
+                        predictor_results=results,
+                    )
+                    probabilities = pred.get("probabilities", {}) or {}
                     batch_results.append({
                         "Profession": prof,
-                        "Predicted": pred["predicted_class"],
-                        "Confidence": pred["confidence"],
-                        **pred["probabilities"]
+                        "Predicted": pred.get("predicted_class", "unknown"),
+                        "Confidence": pred.get("confidence", 0.0),
+                        **probabilities
                     })
                 
                 batch_df = pd.DataFrame(batch_results)
