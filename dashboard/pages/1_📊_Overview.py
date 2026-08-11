@@ -130,7 +130,7 @@ with col1:
         data=filtered_data,
         x_col="pronoun_group",
         title="Response Distribution by Pronoun Group",
-        show_percentages=True
+        as_percentage=True
     )
     st.plotly_chart(fig, use_container_width=True)
 
