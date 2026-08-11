@@ -138,7 +138,8 @@ with col2:
     # Pie chart
     fig_pie = create_pie_chart(
         filtered_data,
-        "pronoun_group",
+        values_col="pronoun_group",
+        names_col="pronoun_group",
         title="Pronoun Proportions"
     )
     st.plotly_chart(fig_pie, use_container_width=True)
@@ -258,10 +259,14 @@ with col2:
 # Model Comparison Summary
 st.markdown("## 🔬 Model Comparison Summary")
 
-model_summary = filtered_data.groupby("model").agg({
-    "id": "count",
-    "pronoun_group": lambda x: (x.isin(["he/him", "she/her"])).sum() / len(x) * 100
-}).rename(columns={"id": "Total Responses", "pronoun_group": "Gendered %"})
+model_summary = (
+    filtered_data.groupby("model")
+    .agg(
+        total_responses=("model", "count"),
+        gendered_pct=("pronoun_group", lambda x: (x.isin(["he/him", "she/her"])).sum() / len(x) * 100)
+    )
+    .rename(columns={"total_responses": "Total Responses", "gendered_pct": "Gendered %"})
+)
 
 model_summary = model_summary.sort_values("Gendered %", ascending=False)
 
