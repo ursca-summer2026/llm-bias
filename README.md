@@ -9,7 +9,7 @@
 
 A comprehensive research toolkit for measuring and analyzing gender bias in Large Language Models (LLMs). This project systematically tests how AI models implicitly assume the gender of people in different professions through automated prompt testing, statistical analysis, and interactive visualizations.
 
-## Authors:
+## Authors
 
 Allegheny College
 * *Ainslee Plansko*: Ollama data gathering, theory, coding
@@ -147,7 +147,7 @@ uv run llm-bias query \
 # If files exist, creates phi3_test_01.csv to avoid overwrites
 ```
 
-**Executing scripts**: 
+**Executing scripts**:
 
 If you would like to write a script to run the tool on several models in series, then (Unix) *bash* script will have the following form for 100 results from each prompt given.
 
