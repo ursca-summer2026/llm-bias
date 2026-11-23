@@ -13,7 +13,7 @@ A comprehensive research toolkit for measuring and analyzing gender bias in Larg
 
 Allegheny College
 * *Ainslee Plansko*: Ollama data gathering, theory, coding
-* *Saad Nawas* : Database, theory, and coding
+* *Saad Nawaz* : Database, theory, and coding
 * *Oliver Bonham-Carter*, PhD. : Direction
 
 ## 🎯 Overview
