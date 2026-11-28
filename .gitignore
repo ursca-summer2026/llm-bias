@@ -151,3 +151,4 @@ reports/*.pdf
 data/temp/
 .streamlit/secrets.toml
 0_out/
+results/
